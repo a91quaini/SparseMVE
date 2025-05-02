@@ -1,4 +1,8 @@
 module BCW
+# Module implementing the approach by 
+# Bertsimas, Dimitris and Cory-Wright, Ryan
+# A scalable algorithm for sparse portfolio selection
+# 2022
 
 # bring in any dependencies your sub‐modules expect
 using JuMP
