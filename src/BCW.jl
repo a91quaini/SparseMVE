@@ -12,6 +12,7 @@ include(joinpath(@__DIR__, "BCW", "inner_problem.jl"))
 include(joinpath(@__DIR__,"BCW","kelley_primal.jl"))
 include(joinpath(@__DIR__,"BCW","miop_formulation.jl"))
 include(joinpath(@__DIR__, "BCW", "socp_relaxation.jl"))
+include(joinpath(@__DIR__,"BCW","raw.jl"))
 
 
 # re‐export everything
@@ -27,6 +28,9 @@ export CutIterData,
        getKelleyPrimalCuts,
        cutting_planes_portfolios,
        portfolios_socp, 
-       portfolios_socp2
+       portfolios_socp2,
+       mosek_raw_bigM,
+       mosek_raw_MISOCP,
+       mosek_MISOCP_relaxation
 
 end # module BCW
