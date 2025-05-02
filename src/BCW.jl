@@ -11,6 +11,8 @@ include(joinpath(@__DIR__, "BCW", "hillclimb.jl"))
 include(joinpath(@__DIR__, "BCW", "inner_problem.jl"))
 include(joinpath(@__DIR__,"BCW","kelley_primal.jl"))
 include(joinpath(@__DIR__,"BCW","miop_formulation.jl"))
+include(joinpath(@__DIR__, "BCW", "socp_relaxation.jl"))
+
 
 # re‐export everything
 export CutIterData,
@@ -23,6 +25,8 @@ export CutIterData,
        inner_dual,
        inner_dual2,
        getKelleyPrimalCuts,
-       cutting_planes_portfolios
+       cutting_planes_portfolios,
+       portfolios_socp, 
+       portfolios_socp2
 
 end # module BCW
