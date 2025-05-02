@@ -19,7 +19,7 @@ using LinearAlgebra    # for I, if you need it
     c = SparseMVE.Cut(0.2, [1.0, 2.0], :active)
     @test isa(c, SparseMVE.Cut)
     @test c.p           == 0.2
-    @test c.grad_s      == [1.0, 2.0]
+    @test c.∇s         == [1.0, 2.0]
 
     # -- Dual --
     α = [0.1, 0.2]; βl = [0.0]; βu = [1.0]; ρ = [0.3]; w = [0.4]
