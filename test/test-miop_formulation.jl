@@ -6,7 +6,7 @@ const MOI = MathOptInterface
 
 # A tiny “dummy” portfolio with trivial data so each function runs without error.
 # (You’ll want more realistic fixtures later.)
-function make_dummy_portfolio()
+function make_dummy_portfolio_miop()
     # n = # of assets, m = # of linear constraints, f = # of “factors” (size of α & Y)
     n, m, f, k = 3, 2, 2, 1
     μ = ones(n)             # asset expected returns
@@ -31,29 +31,29 @@ function make_dummy_portfolio()
 end
 
 
-const P = make_dummy_portfolio()
+const P_miop = make_dummy_portfolio_miop()
 const idx = [1]  # single‐asset support
 
 @testset "portfolios_objective" begin
-    s = zeros(P.n); s[idx] .= 1.0
-    cut = SparseMVE.BCW.portfolios_objective(P, s)
+    s = zeros(P_miop.n); s[idx] .= 1.0
+    cut = SparseMVE.BCW.portfolios_objective(P_miop, s)
     @test isa(cut, SparseMVE.BCW.Cut)
     @test cut.status in (MOI.OPTIMAL, MOI.INFEASIBLE)
-    @test length(cut.∇s) == P.n
+    @test length(cut.∇s) == P_miop.n
 end
 
 @testset "portfolios_objective2" begin
-    s0 = fill(0.5, P.n)
-    cut2 = SparseMVE.BCW.portfolios_objective2(P, s0)
+    s0 = fill(0.5, P_miop.n)
+    cut2 = SparseMVE.BCW.portfolios_objective2(P_miop, s0)
     @test isa(cut2, SparseMVE.BCW.Cut)
-    @test length(cut2.∇s) == P.n
+    @test length(cut2.∇s) == P_miop.n
 end
 
 @testset "getWarmStart" begin
-    ws = SparseMVE.BCW.getWarmStart(P, 2)
+    ws = SparseMVE.BCW.getWarmStart(P_miop, 2)
     @test isa(ws, Vector{Float64})
-    @test sum(ws) <= P.k  # should respect cardinality
-    @test length(ws) == P.n
+    @test sum(ws) <= P_miop.k  # should respect cardinality
+    @test length(ws) == P_miop.n
 end
 
 @testset "cutting_planes_portfolios signature" begin

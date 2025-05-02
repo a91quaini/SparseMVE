@@ -34,7 +34,7 @@ function cutting_planes_portfolios(
 
     # cardinality constraints
     @constraint(model, sum(s) <= thePortfolio.k)
-    @constraint(model, sum(s) >= 1)i
+    @constraint(model, sum(s) >= 1)
 
     # minimum return option
     if minReturnConstraint
@@ -82,6 +82,8 @@ function cutting_planes_portfolios(
     dual_vars = inner_dual(thePortfolio, indices)
     w = thePortfolio.γ[indices] .* dual_vars.w
 
+    boundGap = (objective_value(model) - bestbound) / abs(objective_value(model))
+    boundGapSOCP   = boundGap
     return CardinalityConstrainedPortfolio(
         indices,
         w,
@@ -90,7 +92,8 @@ function cutting_planes_portfolios(
         dual_vars.βl,
         dual_vars.βu,
         dual_vars.ρ,
-        (objective_value(model) - bestbound) / abs(objective_value(model)),
+        boundGap,
+        boundGapSOCP,
         numIters,
         (thePortfolio.μ[indices]' * w)[1],
         (w' * thePortfolio.X[:,indices]' * thePortfolio.X[:,indices] * w)[1],
