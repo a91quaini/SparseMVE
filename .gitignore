@@ -1,0 +1,20 @@
+# Julia artifacts
+/.julia/          # local julia depot (if you ever clone inside here)
+/Manifest.toml    # optional—often people don’t track Manifest
+/*.ji             # compiled Julia cache
+/*.o
+/*.rlib
+/*.dylib
+/*.so
+*.exe
+*.dll
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Portable test artifacts
+/test/*.jl~       # editor backups
+
