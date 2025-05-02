@@ -9,6 +9,7 @@ using LinearAlgebra
 include(joinpath(@__DIR__, "BCW", "Types.jl"))
 include(joinpath(@__DIR__, "BCW", "hillclimb.jl"))
 include(joinpath(@__DIR__, "BCW", "inner_problem.jl"))
+include(joinpath(@__DIR__,"BCW","kelley_primal.jl"))
 
 # re‐export everything
 export CutIterData,
@@ -19,6 +20,7 @@ export CutIterData,
        PortfolioData,
        portfolios_hillclimb
        inner_dual,
-       inner_dual2
+       inner_dual2,
+       getKelleyPrimalCuts
 
 end # module BCW
