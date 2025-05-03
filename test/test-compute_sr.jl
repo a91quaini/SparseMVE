@@ -1,9 +1,9 @@
 using Test
 using LinearAlgebra
-using SparseMVE: compute_sr
+using SparseMVE.ES: compute_sr
 
 @testset "compute_sr export & signature" begin
-    @test isdefined(SparseMVE, :compute_sr)
+    @test isdefined(SparseMVE.ES, :compute_sr)
     fn = compute_sr
     @test typeof(fn) <: Function
 end

@@ -16,7 +16,6 @@ where:
 
 Throws an `AssertionError` if dimensions mismatch or if `selection` is out of range.
 """
-
 function compute_sr(
     w::AbstractVector{<:Real},
     μ::AbstractVector{<:Real},
@@ -38,3 +37,4 @@ function compute_sr(
     den = sqrt(dot(w_sel, Σ_sel * w_sel))
     return num / den
 end
+
