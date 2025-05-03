@@ -7,21 +7,22 @@ using LinearAlgebra
         selection::Union{Nothing,AbstractVector{<:Integer}} = nothing
     )
 
-Compute the maximum Sharpe ratio
+    Compute the maximum Sharpe ratio
 
-    √( μ_S' * Σ_S^{-1} * μ_S )
+        √( μ_S' * Σ_S^{-1} * μ_S )
 
-over either the full universe or a selected subset of assets.
+    over either the full universe or a selected subset of assets.
 
-# Arguments
-- `μ`         length-n expected-returns vector  
-- `Σ`         n×n covariance matrix (must be symmetric positive-definite)  
-- `selection` (optional) 1-based indices of assets  
+    # Arguments
+    - `μ`         length-n expected-returns vector  
+    - `Σ`         n×n covariance matrix (must be symmetric positive-definite)  
+    - `selection` (optional) 1-based indices of assets  
 
-# Returns
-- `sr::T`    the resulting Sharpe ratio  
+    # Returns
+    - `sr::T`    the resulting Sharpe ratio  
 
-Throws an `AssertionError` if dimensions mismatch or `selection` out of bounds.
+    Throws an `AssertionError` if dimensions mismatch or `selection` out of bounds.
+
 """
 function compute_mve_sr(
     mu::AbstractVector{<:Real},
