@@ -1,4 +1,5 @@
-using Test, Random
+using Test
+using Random
 using SparseMVE.BCW: mve_weights_l0_BCW
 
 @testset "mve_weights_l0_BCW signature" begin

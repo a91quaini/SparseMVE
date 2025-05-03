@@ -5,6 +5,7 @@ version = "0.1.0"
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 JLD = "4138dd39-2aa7-5051-a626-17a0bb65d9c8"
@@ -23,6 +24,7 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 CSV = "0.10.15"
+Combinatorics = "1.0.2"
 DataFrames = "1.7.0"
 DelimitedFiles = "1.9.1"
 JLD = "0.13.5"

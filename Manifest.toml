@@ -2,7 +2,7 @@
 
 julia_version = "1.11.5"
 manifest_format = "2.0"
-project_hash = "23ee0f67a462012062d1209c7cb3a24cd04271c8"
+project_hash = "6672d837693dfb13f0a781689634cf8a0c8a0584"
 
 [[deps.AliasTables]]
 deps = ["PtrArrays", "Random"]
@@ -63,6 +63,11 @@ deps = ["TranscodingStreams", "Zlib_jll"]
 git-tree-sha1 = "962834c22b66e32aa10f7611c08c8ca4e20749a9"
 uuid = "944b1d66-785c-5afd-91f1-9de20f533193"
 version = "0.7.8"
+
+[[deps.Combinatorics]]
+git-tree-sha1 = "08c8b6831dc00bfea825826be0bc8336fc369860"
+uuid = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+version = "1.0.2"
 
 [[deps.CommonSubexpressions]]
 deps = ["MacroTools"]
