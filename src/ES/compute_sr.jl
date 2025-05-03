@@ -5,16 +5,16 @@ using LinearAlgebra
 
 Compute the Sharpe ratio
 
-Sharpe = wᵀ μ / √(wᵀ Σ w)
+    Sharpe = wᵀμ / √(wᵀ Σ w)
 
-where: 
+Arguments:
+- `w::AbstractVector{<:Real}`: length-n weights  
+- `μ::AbstractVector{<:Real}`: length-n expected returns  
+- `Σ::AbstractMatrix{<:Real}`: n×n covariance (dense)  
+- `selection`: optional 1-based `Vector{Int}` of assets to include  
 
-- `w`         is a length-n weight vector,
-- `μ`         is a length-n expected-returns vector,
-- `Σ`         is the n×n covariance matrix,
-- `selection` (optional) is a vector of 1-based indices selecting a subset of assets.
-
-Throws an `AssertionError` if dimensions mismatch or if `selection` is out of range.
+Throws an `AssertionError` if lengths or dimensions mismatch,
+or if `selection` has out-of-bounds indices.
 """
 function compute_sr(
     w::AbstractVector{<:Real},
@@ -37,4 +37,3 @@ function compute_sr(
     den = sqrt(dot(w_sel, Σ_sel * w_sel))
     return num / den
 end
-

@@ -1,27 +1,27 @@
 using LinearAlgebra
 
 """
-    compute_mve_sr(mu, Σ; selection=nothing)
+    compute_mve_sr(
+        mu::AbstractVector{<:Real},
+        Σ::AbstractMatrix{<:Real};
+        selection::Union{Nothing,AbstractVector{<:Integer}} = nothing
+    )
 
-Compute the maximum achievable Sharpe ratio (mean-variance efficient) for
-either the full universe or a selected subset of assets.
+Compute the maximum Sharpe ratio
+
+    √( μ_S' * Σ_S^{-1} * μ_S )
+
+over either the full universe or a selected subset of assets.
 
 # Arguments
-- `mu::AbstractVector{<:Real}`: expected returns (length n)
-- `Σ::AbstractMatrix{<:Real}`: covariance matrix (n×n)
-- `selection::Union{Nothing,AbstractVector{<:Integer}}`: optional 1-based indices of assets
+- `μ`         length-n expected-returns vector  
+- `Σ`         n×n covariance matrix (must be symmetric positive-definite)  
+- `selection` (optional) 1-based indices of assets  
 
 # Returns
-- `sr::Float64`: the optimal Sharpe ratio, i.e.
+- `sr::T`    the resulting Sharpe ratio  
 
-```text
-    sr = sqrt(mu_S' * Σ_S^{-1} * mu_S)
-```
-
-where `mu_S` and `Σ_S` are the (sub)vectors/matrix restricted to `selection`,
-or the full universe if `selection===nothing`.
-
-Throws an `AssertionError` if dimensions mismatch or indices out of bounds.
+Throws an `AssertionError` if dimensions mismatch or `selection` out of bounds.
 """
 function compute_mve_sr(
     mu::AbstractVector{<:Real},
@@ -31,14 +31,19 @@ function compute_mve_sr(
     n = length(mu)
     @assert size(Σ) == (n,n) "Σ must be an $n×$n matrix, got $(size(Σ))"
 
-    idx = selection === nothing ? axes(mu,1) : selection
-    @assert all(1 .<= idx .<= n) "selection indices out of bounds (1:$n)"
-
-    # subset
-    mu_S = view(mu, idx)
-    Σ_S  = view(Σ, idx, idx)
-
-    # solve Σ_S * x = mu_S, then sr = sqrt(mu_S' * x)
-    x = Σ_S \ mu_S
-    return sqrt(dot(mu_S, x))
+    if selection === nothing
+        # full‐universe: one factorization and solve
+        F = cholesky(Σ; check = true)
+        x = F \ mu
+        return sqrt(dot(mu, x))
+    else
+        idx = selection
+        @assert all(1 .<= idx .<= n) "selection indices out of bounds (1:$n)"
+        # build subproblem on S = idx
+        μ_S = @view mu[idx]
+        Σ_S = @view Σ[idx, idx]
+        F   = cholesky(Σ_S; check = true)
+        x   = F \ μ_S
+        return sqrt(dot(μ_S, x))
+    end
 end
