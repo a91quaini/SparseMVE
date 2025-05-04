@@ -6,7 +6,7 @@ using LinearAlgebra
         Σ::AbstractMatrix{<:Real};
         selection::Union{Nothing,AbstractVector{<:Integer}} = nothing,
         gamma::Real = 1.0,
-        do_checks::Bool = true
+        do_checks::Bool = false
     ) -> Vector{Float64}
 
 Compute the weights of the mean–variance‐efficient portfolio (no cardinality constraint)
@@ -27,7 +27,7 @@ function compute_mve_weights(
     Σ::AbstractMatrix{<:Real};
     selection::Union{Nothing,AbstractVector{<:Integer}} = nothing,
     gamma::Real = 1.0,
-    do_checks::Bool = true
+    do_checks::Bool = false
 )::Vector{Float64}
     n = length(μ)
     if do_checks
