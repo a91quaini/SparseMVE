@@ -1,6 +1,6 @@
 using LinearAlgebra
 using Combinatorics 
-using SparseMVE.ES: compute_mve_sr
+using SparseMVE.UTILS: compute_mve_sr, compute_mve_weights
 
 """
     compute_mve_sr_cardk(
@@ -19,7 +19,6 @@ k‐subset; otherwise it draws `max_comb` random supports of each size.
 - `Σ::AbstractMatrix{<:Real}`   : n×n covariance, must match μ  
 - `max_card::Integer`           : maximum number of nonzeros (1…n)  
 - `max_comb::Integer=0`         : if 0 ⇒ exhaustive search; else random sampling  
-- `gamma::Real=0.0`             : risk-aversion scalar (0 means pure ratio problem)  
 - `do_checks::Bool=true`        : perform input assertions  
 
 # Returns
@@ -28,12 +27,11 @@ A named tuple `(sr, weights, selection)` where
 - `weights::Vector{Float64}` is the length-n weight vector (zeros off-support)  
 - `selection::Vector{Int}`   are the 1-based indices of the selected assets  
 """
-function compute_mve_sr_cardk(
+function compute_sparse_mve_ES(
     μ::AbstractVector{<:Real},
     Σ::AbstractMatrix{<:Real},
     max_card::Integer;
     max_comb::Integer=0,
-    gamma::Real=0.0,
     do_checks::Bool=true
 )
     n = length(μ)
@@ -41,7 +39,6 @@ function compute_mve_sr_cardk(
         @assert size(Σ) == (n,n)    "Σ must be an $n×n matrix"
         @assert 1 ≤ max_card ≤ n    "max_card must be between 1 and $n"
         @assert max_comb ≥ 0        "max_comb must be non-negative"
-        @assert gamma ≥ 0           "gamma must be non-negative"
     end
 
     best_sr  = -Inf
@@ -68,17 +65,10 @@ function compute_mve_sr_cardk(
         end
     end
 
-    # now build final weights on the chosen support
-    μS = view(μ, best_sel)
-    ΣS = view(Σ, best_sel, best_sel)
-    wS = ΣS \ μS
-    # only apply risk-aversion scaling if gamma>0
-    if gamma > 0
-        wS ./= gamma
-    end
-
-    w = zeros(eltype(μ), n)
-    w[best_sel] .= wS
+    # build final weights via compute_mve_weights (no re‐checking)
+    w = compute_mve_weights(μ, Σ;
+                            selection=best_sel,
+                            do_checks=false)
 
     return (sr=best_sr, weights=w, selection=best_sel)
 end

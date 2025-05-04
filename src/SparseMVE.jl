@@ -1,5 +1,8 @@
 module SparseMVE
 
+include("UTILS.jl")
+using .UTILS
+
 include("BCW.jl")
 using .BCW
 

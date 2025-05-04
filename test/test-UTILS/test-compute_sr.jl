@@ -1,6 +1,6 @@
 using Test
 using LinearAlgebra
-using SparseMVE.ES: compute_sr
+using SparseMVE.UTILS: compute_sr
 
 @testset "compute_sr export & signature" begin
     @test isdefined(SparseMVE.ES, :compute_sr)
